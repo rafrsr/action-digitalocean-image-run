@@ -16,23 +16,22 @@ inputs:
 runs:
   using: "composite"
   steps:
-#       - name: Install doctl
-#         uses: digitalocean/action-doctl@v2
-#         with:
-#           token: ${{ inputs.accessToken }}
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ inputs.accessToken }}
 
-#       - uses: benjlevesque/short-sha@v1.2
-#         id: short-sha
+      - uses: benjlevesque/short-sha@v1.2
+        id: short-sha
       
-#       - name: Log in to DigitalOcean Container Registry with short-lived credentials
-#         run: doctl registry login --expiry-seconds 1200
-#         shell: bash
-      
-      - uses: iamsauravsharma/create-dotenv@v1.2.0
-       # env: ${{ inputs.env }}
-      
-      - run: cat .env
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 1200
         shell: bash
-          
-#       - run: docker run --env-file registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
+      
+#      - uses: iamsauravsharma/create-dotenv@v1.2.0
+      
+#       - run: cat .env
 #         shell: bash
+          
+       - run: docker run registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
+         shell: bash
