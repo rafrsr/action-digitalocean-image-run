@@ -20,6 +20,10 @@ runs:
 
       - uses: benjlevesque/short-sha@v1.2
         id: short-sha
-
-      - run: docker run --pull always registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
+      
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 1200
+        shell: bash
+        
+      - run: docker run registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
         shell: bash
