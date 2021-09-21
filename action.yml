@@ -33,5 +33,5 @@ runs:
 #       - run: cat .env
 #         shell: bash
           
-       - run: docker run registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
-         shell: bash
+      - run: docker run registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
+        shell: bash
