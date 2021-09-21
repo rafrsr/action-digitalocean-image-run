@@ -1,0 +1,25 @@
+name: 'Run on Immage'
+description: 'Run a command on current image already published on Digital Ocean'
+inputs:
+  command:
+    description: 'Command to execute'
+    required: true
+  accessToken:
+    description: 'Digital Ocean API Access Token'
+    required: true
+  repository:
+    description: 'Digital Ocean Repository'
+    required: true
+runs:
+  using: "composite"
+  steps:
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ inputs.accessToken }}
+
+      - uses: benjlevesque/short-sha@v1.2
+        id: short-sha
+
+      - run: docker run registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
+        shell: bash
