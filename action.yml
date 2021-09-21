@@ -28,10 +28,10 @@ runs:
         run: doctl registry login --expiry-seconds 1200
         shell: bash
       
-#      - uses: iamsauravsharma/create-dotenv@v1.2.0
-      
-#       - run: cat .env
-#         shell: bash
+      - uses: iamsauravsharma/create-dotenv@v1.2.0
           
-      - run: docker run registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
+      - run: cat .env
+        shell: bash
+          
+      - run: docker run --env-file .env registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
         shell: bash
