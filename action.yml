@@ -30,8 +30,5 @@ runs:
       
       - uses: iamsauravsharma/create-dotenv@v1.2.0
           
-      - run: cat .env
-        shell: bash
-          
       - run: docker run -t --env-file .env registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
         shell: bash
