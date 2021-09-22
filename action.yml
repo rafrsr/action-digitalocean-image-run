@@ -13,6 +13,8 @@ inputs:
   repository:
     description: 'Digital Ocean Repository'
     required: true
+  tag:
+    description: 'Tag to use'
 runs:
   using: "composite"
   steps:
@@ -30,5 +32,5 @@ runs:
       
       - uses: iamsauravsharma/create-dotenv@v1.2.0
           
-      - run: docker run -t --env-file .env registry.digitalocean.com/${{ inputs.repository }}:${{ steps.short-sha.outputs.sha }} ${{ inputs.command }}
+      - run: docker run -t --env-file .env registry.digitalocean.com/${{ inputs.repository }}:${{ inputs.tag || steps.short-sha.outputs.sha }} ${{ inputs.command }}
         shell: bash
